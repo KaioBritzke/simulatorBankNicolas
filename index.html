@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Financiamento</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>AutoLuxe</h1>
+      <p>Simulador de financiamento de veículo</p>
+
+      <form id="simulatorForm">
+        <label for="saleValue">Valor total da venda (€)</label>
+        <input id="saleValue" name="saleValue" type="number" min="0" step="0.01" placeholder="Ex: 25000" required />
+
+        <label for="downPayment">Entrada (opcional) (€)</label>
+        <input id="downPayment" name="downPayment" type="number" min="0" step="0.01" placeholder="Ex: 5000" />
+
+        <label for="interestRate">Juros (%)</label>
+        <input id="interestRate" name="interestRate" type="number" min="0" step="0.01" placeholder="Ex: 5" required />
+
+        <label for="installments">Quantidade de parcelas</label>
+        <input id="installments" name="installments" type="number" min="1" step="1" placeholder="Ex: 36" required />
+
+        <button type="submit">Calcular</button>
+      </form>
+
+      <div id="results" class="results hidden" aria-live="polite">
+        <h2>Resultado da Simulação</h2>
+        <div class="result-row"><span>Valor total</span><strong id="resultTotal">€ 0,00</strong></div>
+        <div class="result-row"><span>Entrada</span><strong id="resultEntry">€ 0,00</strong></div>
+        <div class="result-row"><span>Valor financiado</span><strong id="resultFinanced">€ 0,00</strong></div>
+        <div class="result-row"><span>Juros totais</span><strong id="resultInterest">€ 0,00</strong></div>
+        <div class="result-row"><span>Valor da parcela</span><strong id="resultInstallment">€ 0,00</strong></div>
+        <div class="result-row highlight"><span>Total com juros</span><strong id="resultTotalWithInterest">€ 0,00</strong></div>
+      </div>
+
+      <p class="note">Em caso de atraso no pagamento de qualquer parcela, o <b>COMPRADOR<b> ficará sujeito ao pagamento de multa confore: Multa de 1% sobre o valor total do veículo no primeiro dia de atraso, e 0,01% ao dia sobre o mesmo valor nos dias subsequentes, até a regularização do pagamento.</p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
