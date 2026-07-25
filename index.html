@@ -12,33 +12,87 @@
       <h1>AutoLuxe</h1>
       <p>Simulador de financiamento de veículo</p>
 
-      <form id="simulatorForm">
-        <label for="saleValue">Valor total da venda (€)</label>
-        <input id="saleValue" name="saleValue" type="number" min="0" step="0.01" placeholder="Ex: 25000" required />
-
-        <label for="downPayment">Entrada (opcional) (€)</label>
-        <input id="downPayment" name="downPayment" type="number" min="0" step="0.01" placeholder="Ex: 5000" />
-
-        <label for="interestRate">Juros (%)</label>
-        <input id="interestRate" name="interestRate" type="number" min="0" step="0.01" placeholder="Ex: 5" required />
-
-        <label for="installments">Quantidade de parcelas</label>
-        <input id="installments" name="installments" type="number" min="1" step="1" placeholder="Ex: 36" required />
-
-        <button type="submit">Calcular</button>
-      </form>
-
-      <div id="results" class="results hidden" aria-live="polite">
-        <h2>Resultado da Simulação</h2>
-        <div class="result-row"><span>Valor total</span><strong id="resultTotal">€ 0,00</strong></div>
-        <div class="result-row"><span>Entrada</span><strong id="resultEntry">€ 0,00</strong></div>
-        <div class="result-row"><span>Valor financiado</span><strong id="resultFinanced">€ 0,00</strong></div>
-        <div class="result-row"><span>Juros totais</span><strong id="resultInterest">€ 0,00</strong></div>
-        <div class="result-row"><span>Valor da parcela</span><strong id="resultInstallment">€ 0,00</strong></div>
-        <div class="result-row highlight"><span>Total com juros</span><strong id="resultTotalWithInterest">€ 0,00</strong></div>
+      <!-- Navegação entre abas -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="simulator">Simulador</button>
+        <button class="tab-btn" data-tab="tracking">Acompanhamento de Parcelas</button>
       </div>
 
-      <p class="note">Em caso de atraso no pagamento de qualquer parcela, o <b>COMPRADOR<b> ficará sujeito ao pagamento de multa confore: Multa de 1% sobre o valor total do veículo no primeiro dia de atraso, e 0,01% ao dia sobre o mesmo valor nos dias subsequentes, até a regularização do pagamento.</p>
+      <!-- TAB 1: Simulador -->
+      <div id="simulator" class="tab-content active">
+        <form id="simulatorForm">
+          <label for="saleValue">Valor total da venda (€)</label>
+          <input id="saleValue" name="saleValue" type="number" min="0" step="0.01" placeholder="Ex: 25000" required />
+
+          <label for="downPayment">Entrada (opcional) (€)</label>
+          <input id="downPayment" name="downPayment" type="number" min="0" step="0.01" placeholder="Ex: 5000" />
+
+          <label for="interestRate">Juros (%)</label>
+          <input id="interestRate" name="interestRate" type="number" min="0" step="0.01" placeholder="Ex: 5" required />
+
+          <label for="installments">Quantidade de parcelas</label>
+          <input id="installments" name="installments" type="number" min="1" step="1" placeholder="Ex: 36" required />
+
+          <button type="submit">Calcular</button>
+        </form>
+
+        <div id="results" class="results hidden" aria-live="polite">
+          <h2>Resultado da Simulação</h2>
+          <div class="result-row"><span>Valor total</span><strong id="resultTotal">€ 0,00</strong></div>
+          <div class="result-row"><span>Entrada</span><strong id="resultEntry">€ 0,00</strong></div>
+          <div class="result-row"><span>Valor financiado</span><strong id="resultFinanced">€ 0,00</strong></div>
+          <div class="result-row"><span>Juros totais</span><strong id="resultInterest">€ 0,00</strong></div>
+          <div class="result-row"><span>Valor da parcela</span><strong id="resultInstallment">€ 0,00</strong></div>
+          <div class="result-row highlight"><span>Total com juros</span><strong id="resultTotalWithInterest">€ 0,00</strong></div>
+        </div>
+
+        <p class="note">Em caso de atraso no pagamento de qualquer parcela, o <b>COMPRADOR</b> ficará sujeito ao pagamento de multa confore: Multa de 1% sobre o valor total do veículo no primeiro dia de atraso, e 0,01% ao dia sobre o mesmo valor nos dias subsequentes, até a regularização do pagamento.</p>
+      </div>
+
+      <!-- TAB 2: Acompanhamento de Parcelas -->
+      <div id="tracking" class="tab-content">
+        <form id="trackingForm">
+          <label for="buyerName">Nome do Comprador</label>
+          <input id="buyerName" name="buyerName" type="text" placeholder="Ex: João Silva" required />
+
+          <label for="trackingTotalValue">Valor total da venda (Insira aqui o valor da venda contando com a entrada) (€)</label>
+          <input id="trackingTotalValue" name="trackingTotalValue" type="number" min="0" step="0.01" placeholder="Ex: 25000" required />
+
+          <label for="trackingDownPayment">Valor de entrada (€)</label>
+          <input id="trackingDownPayment" name="trackingDownPayment" type="number" min="0" step="0.01" placeholder="Ex: 5000" />
+
+          <label for="trackingInstallments">Número de parcelas</label>
+          <input id="trackingInstallments" name="trackingInstallments" type="number" min="1" step="1" placeholder="Ex: 36" required />
+
+          <label for="trackingInstallmentValue">Valor de cada parcela (€)</label>
+          <input id="trackingInstallmentValue" name="trackingInstallmentValue" type="number" min="0" step="0.01" placeholder="Ex: 694,44" required />
+
+          <label for="paidInstallments">Quantidade de parcelas pagas</label>
+          <input id="paidInstallments" name="paidInstallments" type="number" min="0" step="1" placeholder="Ex: 12" required />
+
+          <label for="dueDay">Dia de vencimento das parcelas</label>
+          <input id="dueDay" name="dueDay" type="number" min="1" max="31" placeholder="Ex: 10" required />
+
+          <label for="firstPaymentDate">Data da primeira parcela paga</label>
+          <input id="firstPaymentDate" name="firstPaymentDate" type="date" required />
+
+          <button type="submit">Gerar Acompanhamento</button>
+        </form>
+
+        <div id="trackingResults" class="tracking-results hidden">
+          <div class="buyer-info">
+            <h2>Acompanhamento de Parcelas</h2>
+            <div class="buyer-header">
+              <span>Comprador: <strong id="displayBuyerName"></strong></span>
+              <span>Valor de entrada: <strong id="displayDownPayment"></strong></span>
+              <span>Valor total da venda (com entrada): <strong id="displayTotalValue"></strong></span>
+              <span>Total de parcelas: <strong id="displayTotalInstallments"></strong></span>
+            </div>
+          </div>
+
+          <div id="installmentsList" class="installments-list"></div>
+        </div>
+      </div>
     </section>
   </main>
   <script src="script.js"></script>
