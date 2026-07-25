@@ -55,7 +55,7 @@
           <label for="buyerName">Nome do Comprador</label>
           <input id="buyerName" name="buyerName" type="text" placeholder="Ex: João Silva" required />
 
-          <label for="trackingTotalValue">Valor total da venda (Insira aqui o valor da venda contando com a entrada) (€)</label>
+          <label for="trackingTotalValue">Valor total da venda (Insira aqui o valor da venda descontando com a entrada) (€)</label>
           <input id="trackingTotalValue" name="trackingTotalValue" type="number" min="0" step="0.01" placeholder="Ex: 25000" required />
 
           <label for="trackingDownPayment">Valor de entrada (€)</label>
@@ -89,7 +89,7 @@
             <div class="buyer-header">
               <span>Comprador: <strong id="displayBuyerName"></strong></span>
               <span>Valor de entrada: <strong id="displayDownPayment"></strong></span>
-              <span>Valor total da venda (com entrada): <strong id="displayTotalValue"></strong></span>
+              <span>Valor total da venda (sem entrada): <strong id="displayTotalValue"></strong></span>
               <span>Total de parcelas: <strong id="displayTotalInstallments"></strong></span>
               <span>Parcelas pagas: <strong id="displayPaidInstallments"></strong></span>
             </div>

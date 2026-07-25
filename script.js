@@ -63,7 +63,7 @@ form.addEventListener("submit", (event) => {
 
   const financedAmount = Math.max(saleValue - downPayment, 0);
   const interestValue = (financedAmount * interestRate) / 100;
-  const totalWithInterest = saleValue + downPayment + interestValue;
+  const totalWithInterest = (saleValue - downPayment) + interestValue;
   const installmentValue = installments > 0 ? totalWithInterest / installments : 0;
 
   resultTotal.textContent = formatCurrency(saleValue);
