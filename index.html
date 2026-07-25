@@ -70,8 +70,12 @@
           <label for="paidInstallments">Quantidade de parcelas pagas</label>
           <input id="paidInstallments" name="paidInstallments" type="number" min="0" step="1" placeholder="Ex: 12" required />
 
-          <label for="dueDay">Dia de vencimento das parcelas</label>
-          <input id="dueDay" name="dueDay" type="number" min="1" max="31" placeholder="Ex: 10" required />
+          <label for="paymentFrequency">Frequência de pagamento</label>
+          <select id="paymentFrequency" name="paymentFrequency" required>
+            <option value="">Selecione a frequência</option>
+            <option value="weekly">Semanal (7 dias)</option>
+            <option value="biweekly">Quinzenal (14 dias)</option>
+          </select>
 
           <label for="firstPaymentDate">Data da primeira parcela paga</label>
           <input id="firstPaymentDate" name="firstPaymentDate" type="date" required />
@@ -87,6 +91,7 @@
               <span>Valor de entrada: <strong id="displayDownPayment"></strong></span>
               <span>Valor total da venda (com entrada): <strong id="displayTotalValue"></strong></span>
               <span>Total de parcelas: <strong id="displayTotalInstallments"></strong></span>
+              <span>Parcelas pagas: <strong id="displayPaidInstallments"></strong></span>
             </div>
           </div>
 

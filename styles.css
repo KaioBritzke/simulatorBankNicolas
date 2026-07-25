@@ -67,6 +67,40 @@ input:focus {
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
 }
 
+select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  font-size: 1rem;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234f46e5' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+select:hover {
+  border-color: #9ca3af;
+}
+
+select option {
+  padding: 8px 12px;
+  background: #ffffff;
+  color: #374151;
+}
+
 button {
   margin-top: 8px;
   padding: 14px 18px;
@@ -263,6 +297,42 @@ button:active {
   background: #fee2e2;
   color: #991b1b;
   border: 1px solid #fecaca;
+}
+
+/* Agrupamento por mês */
+.month-group {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.month-header {
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  border-bottom: 2px solid #4f46e5;
+}
+
+.month-group .installment-row {
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: transparent;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.month-group .installment-row:last-child {
+  border-bottom: none;
+}
+
+.month-group .installment-row:hover {
+  background: #f9fafb;
 }
 
 @media (max-width: 520px) {

@@ -85,7 +85,7 @@ trackingForm.addEventListener("submit", (event) => {
   const totalInstallments = Number(document.getElementById("trackingInstallments").value) || 0;
   const installmentValue = parseFormattedValue(document.getElementById("trackingInstallmentValue").value);
   const paidInstallments = Number(document.getElementById("paidInstallments").value) || 0;
-  const dueDay = Number(document.getElementById("dueDay").value) || 0;
+  const paymentFrequency = document.getElementById("paymentFrequency").value;
   const firstPaymentDateString = document.getElementById("firstPaymentDate").value;
 
   // Atualizar cabeçalho
@@ -93,18 +93,30 @@ trackingForm.addEventListener("submit", (event) => {
   document.getElementById("displayTotalValue").textContent = formatCurrency(totalValue);
   document.getElementById("displayDownPayment").textContent = formatCurrency(downPayment);
   document.getElementById("displayTotalInstallments").textContent = totalInstallments;
+  document.getElementById("displayPaidInstallments").textContent = paidInstallments;
 
   // Gerar parcelas
   const today = new Date();
   const firstPaymentDate = new Date(firstPaymentDateString);
 
-  let html = "";
+  // Definir o intervalo de dias baseado na frequência
+  const dayInterval = paymentFrequency === "weekly" ? 7 : 14;
+
+  // Agrupar parcelas por mês
+  const installmentsByMonth = {};
 
   for (let i = 1; i <= totalInstallments; i++) {
-    // Calcular data de vencimento baseada na primeira parcela
+    // Calcular data de vencimento baseada na primeira parcela e intervalo
     const dueDate = new Date(firstPaymentDate);
-    dueDate.setMonth(dueDate.getMonth() + (i - 1));
-    dueDate.setDate(Math.min(dueDay, 28));
+    dueDate.setDate(dueDate.getDate() + (i - 1) * dayInterval);
+
+    // Criar chave do mês (YYYY-MM)
+    const monthKey = `${dueDate.getFullYear()}-${String(dueDate.getMonth() + 1).padStart(2, "0")}`;
+    
+    // Inicializar array se não existir
+    if (!installmentsByMonth[monthKey]) {
+      installmentsByMonth[monthKey] = [];
+    }
 
     // Determinar status
     const isPaid = i <= paidInstallments;
@@ -115,15 +127,40 @@ trackingForm.addEventListener("submit", (event) => {
 
     const dueDateFormatted = dueDate.toLocaleDateString("pt-PT");
 
-    html += `
-      <div class="installment-row">
-        <span class="installment-number">Parcela ${i}</span>
-        <span class="installment-value">${formatCurrency(installmentValue)}</span>
-        <span class="installment-due-date">Vencimento: ${dueDateFormatted}</span>
-        <span class="status ${statusClass}">${statusText}</span>
-      </div>
-    `;
+    installmentsByMonth[monthKey].push({
+      number: i,
+      value: formatCurrency(installmentValue),
+      dueDate: dueDateFormatted,
+      statusClass,
+      statusText,
+    });
   }
+
+  // Gerar HTML agrupado por mês
+  let html = "";
+  const sortedMonths = Object.keys(installmentsByMonth).sort();
+
+  sortedMonths.forEach((monthKey) => {
+    const [year, month] = monthKey.split("-");
+    const monthDate = new Date(year, parseInt(month) - 1);
+    const monthLabel = monthDate.toLocaleDateString("pt-PT", { month: "long", year: "numeric" });
+
+    html += `<div class="month-group">
+      <div class="month-header">${monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1)}</div>`;
+
+    installmentsByMonth[monthKey].forEach((installment) => {
+      html += `
+        <div class="installment-row">
+          <span class="installment-number">Parcela ${installment.number}</span>
+          <span class="installment-value">${installment.value}</span>
+          <span class="installment-due-date">Vencimento: ${installment.dueDate}</span>
+          <span class="status ${installment.statusClass}">${installment.statusText}</span>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  });
 
   installmentsList.innerHTML = html;
   trackingResults.classList.remove("hidden");
